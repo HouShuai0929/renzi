@@ -19,9 +19,9 @@
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
           <!-- 用户头像 -->
-          <img src="" class="user-avatar">
+          <img src="@/assets/common/bigUserHeader.png" class="user-avatar">
           <!-- 用户名称 -->
-          <span class="name">柴柴老师</span>
+          <span class="name">阳哥哥</span>
           <i class="el-icon-caret-bottom" style="color:#fff" />
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
@@ -172,7 +172,7 @@ export default {
           cursor: pointer;
           position: absolute;
           right: -20px;
-          top: 25px;
+          top: 14px;
           font-size: 12px;
         }
       }

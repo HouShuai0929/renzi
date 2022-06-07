@@ -38,7 +38,9 @@ export default {
       'sidebar'
     ]),
     routes() {
-      return this.$store.state.menu.menuList
+      console.log(this.$router.options.routes)
+      // this.$router.options.routes 可以拿到完整的路由表数据
+      return this.$router.options.routes
     },
     activeMenu() {
       const route = this.$route

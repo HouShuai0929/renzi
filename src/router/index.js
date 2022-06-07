@@ -7,18 +7,19 @@ Vue.use(Router)
 import Layout from '@/layout'
 
 export const constantRoutes = [
+  // 登录页面
   {
     path: '/login',
     component: () => import('@/views/Login/index'),
     hidden: true
   },
-
+  // 404 页面
   {
     path: '/404',
     component: () => import('@/views/404'),
     hidden: true
   },
-
+  // 首页
   {
     path: '/',
     component: Layout,
@@ -30,6 +31,7 @@ export const constantRoutes = [
       meta: { title: '首页', icon: 'dashboard' }
     }]
   },
+  // 工资管理页面
   {
     path: '/salarys',
     component: Layout,

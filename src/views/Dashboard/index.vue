@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard-container">
-    this is Dashboard
+    首页
   </div>
 </template>
 
