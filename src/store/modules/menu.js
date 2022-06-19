@@ -1,16 +1,17 @@
+// 静态路由表 作为菜单的初始化数据
 import { constantRoutes } from '@/router'
 
 export default {
-  // 开启模块命名空间 才算是严格的模块化管理
-  // 访问 mutation action函数的时候 都需要在前面加上模块名称才可以
   namespaced: true,
   state: () => ({
-    menuList: [...constantRoutes] // 路由表(菜单表)
+    // 先以静态路由表作为菜单数据的初始值
+    menuList: [...constantRoutes]
   }),
   mutations: {
-    // filterAsyncRoutes 过滤之后的动态路由表
-    // 如果当前用户退出登录之后另一个用户进来 它也会同样调用mutation函数
+    // 修改路由表的 mutation 方法
     setMenuList(state, filterAsyncRoutes) {
+      // filterAsyncRoutes 过滤之后的动态路由表
+      // 将动态路由和静态路由组合起来
       state.menuList = [...constantRoutes, ...filterAsyncRoutes]
     }
   }
