@@ -10,7 +10,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.salary-container{
-  padding:30px;
+.salary-container {
+  padding: 30px;
 }
 </style>

@@ -55,7 +55,7 @@ const router = createRouter()
 
 // reset 路由方法
 export function resetRouter() {
-  // 得到一个全新的router实例对象
+  // 得到一个全新的 router 实例对象
   const newRouter = createRouter()
   // 使用新的路由记录覆盖掉老的路由记录
   router.matcher = newRouter.matcher // reset router

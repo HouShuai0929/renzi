@@ -9,10 +9,10 @@ export default {
   }),
   mutations: {
     // 修改路由表的 mutation 方法
-    setMenuList(state, filterAsyncRoutes) {
+    setMenuList(state, filterRoutes) {
       // filterAsyncRoutes 过滤之后的动态路由表
       // 将动态路由和静态路由组合起来
-      state.menuList = [...constantRoutes, ...filterAsyncRoutes]
+      state.menuList = [...constantRoutes, ...filterRoutes]
     }
   }
 }
