@@ -4,19 +4,13 @@
     <svg-icon
       icon-class="fullscreen"
       class="fullscreen"
-      @click="toggleScreen"
     />
   </div>
 </template>
 
 <script>
 export default {
-  name: 'ScreenFull',
-  methods: {
-    toggleScreen() {
-
-    }
-  }
+  name: 'ScreenFull'
 }
 </script>
 
