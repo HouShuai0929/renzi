@@ -1,5 +1,7 @@
 <template>
+  <!-- 网络的图标以这种方式加载 -->
   <div v-if="isExternal" :style="styleExternalIcon" class="svg-external-icon svg-icon" v-on="$listeners" />
+  <!-- 项目中的图标以这种方式加载 -->
   <svg v-else :class="svgClass" aria-hidden="true" v-on="$listeners">
     <use :xlink:href="iconName" />
   </svg>

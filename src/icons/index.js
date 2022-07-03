@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import SvgIcon from '@/components/SvgIcon'
+// 将 SvgIcon 注册为全局组建
 Vue.component('svg-icon', SvgIcon)
 
 // webpack 中批量导入模块的方式：
