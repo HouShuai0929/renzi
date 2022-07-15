@@ -1,6 +1,7 @@
 <template>
   <div class="sidebar-logo-container" :class="{'collapse':collapse}">
     <transition name="sidebarLogoFade">
+      <!-- 点击 logo，跳转到 / -->
       <router-link key="collapse" class="sidebar-logo-link" to="/">
         <img src="@/assets/common/logo.png" class="sidebar-logo  ">
       </router-link>

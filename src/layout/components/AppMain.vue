@@ -1,6 +1,7 @@
 <template>
   <section class="app-main">
     <transition name="fade-transform" mode="out-in">
+      <!-- router-view 绑定 key 的原因：https://blog.csdn.net/Terenceno/article/details/90033967 -->
       <router-view :key="key" />
     </transition>
   </section>

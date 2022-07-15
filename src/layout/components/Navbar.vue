@@ -1,5 +1,6 @@
 <template>
   <div class="navbar">
+    <!-- 汉堡包组件 -->
     <hamburger
       :is-active="sidebar.opened"
       class="hamburger-container"
@@ -24,6 +25,7 @@
           <span class="name">阳哥哥</span>
           <i class="el-icon-caret-bottom" style="color:#fff" />
         </div>
+        <!-- 下拉内容 -->
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
           <router-link to="/">
             <el-dropdown-item> 首页 </el-dropdown-item>
@@ -57,12 +59,14 @@ export default {
     ])
   },
   methods: {
+    // 点击汉堡包
     toggleSideBar() {
+      // 切换侧边栏的展开与收起
       this.$store.dispatch('app/toggleSideBar')
     },
     // 退出登录
     logout() {
-      this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+      this.$router.push('/login')
     }
   }
 }

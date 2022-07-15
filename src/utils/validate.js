@@ -6,6 +6,7 @@
  * @param {string} path
  * @returns {Boolean}
  */
+// 判断是否是外链的方法
 export function isExternal(path) {
   return /^(https?:|mailto:|tel:)/.test(path)
 }
