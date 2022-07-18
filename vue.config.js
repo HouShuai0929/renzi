@@ -6,13 +6,17 @@ function resolve(dir) {
   return path.join(__dirname, dir)
 }
 
+// 设置浏览器标签栏的 title
 const name = defaultSettings.title || 'vue Admin Template' // page title
 
+// 设置本地服务端口
 const port = process.env.port || process.env.npm_config_port || 8081 // dev port
 
 module.exports = {
   publicPath: './',
+  // 输出文件目录
   outputDir: 'dist',
+  // 输出静态文件二级目录
   assetsDir: 'static',
   lintOnSave: process.env.NODE_ENV === 'development',
   productionSourceMap: false,
@@ -20,7 +24,9 @@ module.exports = {
   devServer: {
     port: port,
     open: true,
+    // overlay：当出现编译器错误或警告时，在浏览器中显示全屏覆盖
     overlay: {
+      // 如果要显示警告和错误
       warnings: false,
       errors: true
     }
