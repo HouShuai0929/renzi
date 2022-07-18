@@ -2,6 +2,8 @@
   <!-- 网络的图标以这种方式加载 -->
   <div v-if="isExternal" :style="styleExternalIcon" class="svg-external-icon svg-icon" v-on="$listeners" />
   <!-- 项目中的图标以这种方式加载 -->
+  <!-- svgClass：给 svg 设置的样式 -->
+  <!-- iconName：使用的 svg 图标的名字 -->
   <svg v-else :class="svgClass" aria-hidden="true" v-on="$listeners">
     <use :xlink:href="iconName" />
   </svg>
@@ -14,10 +16,12 @@ import { isExternal } from '@/utils/validate'
 export default {
   name: 'SvgIcon',
   props: {
+    // 使用的 svg 图标的名字
     iconClass: {
       type: String,
       required: true
     },
+    // 给 svg 设置的样式
     className: {
       type: String,
       default: ''
