@@ -22,7 +22,7 @@
           <!-- 用户头像 -->
           <img src="@/assets/common/bigUserHeader.png" class="user-avatar">
           <!-- 用户名称 -->
-          <span class="name">阳哥</span>
+          <span class="name">赵阳老师</span>
           <i class="el-icon-caret-bottom" style="color:#fff" />
         </div>
         <!-- 下拉内容 -->

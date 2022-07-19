@@ -20,9 +20,11 @@ module.exports = {
   assetsDir: 'static',
   lintOnSave: process.env.NODE_ENV === 'development',
   productionSourceMap: false,
-  // 配置代理转发
+  // 本地开发服务器配置
   devServer: {
+    // 端口号
     port: port,
+    // 项目启动后，自动打开浏览器
     open: true,
     // overlay：当出现编译器错误或警告时，在浏览器中显示全屏覆盖
     overlay: {
