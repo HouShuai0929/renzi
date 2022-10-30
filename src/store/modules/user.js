@@ -1,8 +1,14 @@
+import { setToken } from '@/utils/auth'
 export default {
   namespaced: true,
-  state: {},
+  state: {
+    token: ''
+  },
   mutations: {
-
+    setToken(state, newToken) {
+      state.token = newToken
+      setToken(newToken)
+    }
   },
   actions: {
 

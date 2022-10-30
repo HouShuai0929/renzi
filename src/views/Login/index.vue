@@ -6,7 +6,6 @@
       :rules="loginRules"
       class="login-form"
       auto-complete="on"
-      label-position="left"
     >
       <div class="title-container">
         <h3 class="title">
@@ -54,6 +53,7 @@
         class="loginBtn"
         type="primary"
         style="width: 100%; margin-bottom: 30px"
+        :loading="loading"
         @click.native.prevent="handleLogin"
       >Login</el-button>
 
@@ -66,18 +66,28 @@
 </template>
 
 <script>
+import { login } from '@/api/user'
 export default {
   name: 'Login',
   data() {
     return {
       loginForm: {
-        mobile: '13800000002',
-        password: '123456'
+        mobile: '',
+        password: ''
       },
       loginRules: {
+        mobile: [
+          { required: true, message: '请输入手机号', trigger: 'blur' },
+          { pattern: /^1[3-9]\d{9}$/, message: '请输入合法的手机号', trigger: ['blur', 'change'] }
+        ],
+        password: [
+          { required: true, message: '请输入密码', trigger: 'blur' },
+          { min: 6, max: 15, message: '密码长度在 6 到 15 个字符', trigger: ['blur', 'change'] }
+        ]
       },
       passwordType: 'password',
-      redirect: undefined
+      redirect: undefined,
+      loading: false
     }
   },
   watch: {
@@ -101,7 +111,19 @@ export default {
     },
     // 点击登录执行的方法
     handleLogin() {
-      this.$router.push('/')
+      this.$refs.loginRef.validate(async valid => {
+        if (!valid) return
+        try {
+          this.loading = true
+          const res = await login(this.loginForm)
+          this.loading = false
+          this.$message.success(res.message)
+          this.$store.commit('user/setToken', res.data)
+          this.$router.push('/')
+        } catch (error) {
+          this.loading = false
+        }
+      })
     }
   }
 }

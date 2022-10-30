@@ -11,10 +11,10 @@ export function getToken() {
 
 // 设置 token 方法
 export function setToken(token) {
-  return Cookies.set(TokenKey, token)
+  Cookies.set(TokenKey, token)
 }
 
 // 删除 token 方法
 export function removeToken() {
-  return Cookies.remove(TokenKey)
+  Cookies.remove(TokenKey)
 }

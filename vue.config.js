@@ -31,6 +31,12 @@ module.exports = {
       // 如果要显示警告和错误
       warnings: false,
       errors: true
+    },
+    proxy: {
+      '/api': {
+        target: 'http://ihrm-java.itheima.net',
+        changeOrigin: true
+      }
     }
   },
   configureWebpack: {
@@ -53,7 +59,6 @@ module.exports = {
       }
     ])
     // 配置cdn
-    
     // when there are many pages, it will cause too many meaningless requests
     config.plugins.delete('prefetch')
 
