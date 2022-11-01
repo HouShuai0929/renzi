@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-
+import { asyncRoutes } from './asyncRoutes'
 Vue.use(Router)
 
 /* Layout */
@@ -30,17 +30,6 @@ export const constantRoutes = [
       component: () => import('@/views/Dashboard/index'),
       meta: { title: '首页', icon: 'dashboard' }
     }]
-  },
-  // 工资管理页面
-  {
-    path: '/salarys',
-    component: Layout,
-    children: [{
-      path: '', // 如果children path置空的话 当前这个路由会作为一级渲染的默认路由
-      name: 'salarys',
-      component: () => import('@/views/Salary'),
-      meta: { title: '工资管理', icon: 'skill' }
-    }]
   }
 ]
 
@@ -48,7 +37,7 @@ const createRouter = () => new Router({
   // mode: 'history', // require service support
   mode: 'history',
   scrollBehavior: () => ({ y: 0 }),
-  routes: constantRoutes
+  routes: [...constantRoutes, ...asyncRoutes]
 })
 
 const router = createRouter()

@@ -20,9 +20,9 @@
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
           <!-- 用户头像 -->
-          <img src="@/assets/common/bigUserHeader.png" class="user-avatar">
+          <img src="$store.state.user.userInfo.staffPhoto" class="user-avatar">
           <!-- 用户名称 -->
-          <span class="name">赵阳老师</span>
+          <span class="name">{{ $store.state.user.userInfo.username }}</span>
           <i class="el-icon-caret-bottom" style="color:#fff" />
         </div>
         <!-- 下拉内容 -->
@@ -66,7 +66,14 @@ export default {
     },
     // 退出登录
     logout() {
-      this.$router.push('/login')
+      this.$confirm('是否确认退出登录?', '提示', {
+        confirmButtonText: '确认',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.$store.commit('user/removeUserInfo')
+        this.$router.push('/login')
+      })
     }
   }
 }

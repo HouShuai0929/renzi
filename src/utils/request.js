@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { Message } from 'element-ui'
 import store from '@/store'
+import router from '@/router'
 const request = axios.create({
   baseURL: process.env.VUE_APP_BASE_URL,
   timeout: 5000 // request timeout
@@ -32,7 +33,13 @@ request.interceptors.response.use(
     }
   },
   error => {
-    Message.error(error.data.message)
+    if (error.response.status === 401) {
+      store.commit('user/removeUserInfo')
+      router.push('/login')
+      Message.error('登陆过期,请重新登录')
+    } else {
+      Message.error(error.message)
+    }
     return Promise.reject(error)
   }
 )

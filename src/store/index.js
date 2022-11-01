@@ -16,6 +16,12 @@ const store = new Vuex.Store({
     menu,
     user
   },
+  state: {
+
+  },
+  mutations: {
+
+  },
   getters
 })
 
