@@ -20,7 +20,7 @@
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
           <!-- 用户头像 -->
-          <img src="$store.state.user.userInfo.staffPhoto" class="user-avatar">
+          <img :src="$store.state.user.userInfo.staffPhoto" class="user-avatar">
           <!-- 用户名称 -->
           <span class="name">{{ $store.state.user.userInfo.username }}</span>
           <i class="el-icon-caret-bottom" style="color:#fff" />
