@@ -12,9 +12,9 @@
               操作<i class="el-icon-arrow-down el-icon--right" />
             </span>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item>添加子部门</el-dropdown-item>
-              <el-dropdown-item v-if="!isRoot">编辑部门</el-dropdown-item>
-              <el-dropdown-item v-if="!isRoot">删除部门</el-dropdown-item>
+              <el-dropdown-item @click.native="showDialog('add')">添加子部门</el-dropdown-item>
+              <el-dropdown-item v-if="isShowBtn" @click.native="showDialog('edit')">编辑部门</el-dropdown-item>
+              <el-dropdown-item v-if="isShowBtn">删除部门</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </el-col>
@@ -30,9 +30,15 @@ export default {
       type: Object,
       required: true
     },
-    isRoot: {
+    isShowBtn: {
       type: Boolean,
       required: true
+    }
+  },
+  methods: {
+    async showDialog(type) {
+      // console.log('点击了添加子部门');
+      this.$emit('show-dialog', this.data, type)
     }
   }
 }
