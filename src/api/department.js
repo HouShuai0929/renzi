@@ -57,3 +57,14 @@ export function updateDepartment(data) {
     data
   })
 }
+/**
+ * 删除部门
+ * @param {*} id 部门 id
+ * @returns promise
+ */
+export function delDepartment(id) {
+  return request({
+    url: `/company/department/${id}`,
+    method: 'delete'
+  })
+}

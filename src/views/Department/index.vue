@@ -1,17 +1,17 @@
 <template>
   <div class="department-container">
     <div class="app-container">
-      <el-card>
+      <el-card v-loading="loading">
         <!-- 头部 -->
         <tree-tools :data="company" :is-show-btn="false" @show-dialog="showDialog" />
         <!-- 树形结构 -->
         <!-- data：用于指定树形结构渲染的数据（树形数据） -->
         <!-- props：用于修改 el-tree 默认读取的字段 -->
-        <el-tree :data="list" :props="defaultProps">
+        <el-tree :data="list" :props="defaultProps" :default-expand-all="true">
           <!-- 使用作用域插槽，渲染自定义结构 -->
           <!-- data：每一行的数据 -->
           <template #default="{ data }">
-            <tree-tools :data="data" :is-show-btn="true" @show-dialog="showDialog" />
+            <tree-tools :data="data" :is-show-btn="true" @show-dialog="showDialog" @fetch-department="getDepartmentList" />
           </template>
         </el-tree>
       </el-card>
@@ -76,7 +76,17 @@ export default {
       // 2. cb(new Error('提示给用户的错误信息')) 表示校验没通过
       // 1. 找到要添加的子部门的所有同级部门（也就是正在操作的部门的所有子部门）
       // this.currentdata 就是当前正常操作的部门数据
-      const broArr = this.originList.filter(item => item.pid === this.currentdata.id)
+      // const broArr = this.originList.filter(item => item.pid === this.currentdata.id)
+      let broArr = []
+      if (this.departForm.id) {
+        if (value === this.currentdata.name) {
+          cb()
+          return
+        }
+        broArr = this.originList.filter(item => item.pid === this.currentdata.pid)
+      } else {
+        broArr = this.originList.filter(item => item.pid === this.currentdata.id)
+      }
       // console.log(broArr);
       // 2. 只要有一个同级部门名称和我要新添加的部门名称一样，就校验不通过
       const isSame = broArr.some(item => item.name === value)
@@ -91,6 +101,10 @@ export default {
 
     // 部门编码的自定义校验规则函数
     const validateCode = (rules, value, cb) => {
+      if (this.departForm.id && value === this.currentdata.code) {
+        cb()
+        return
+      }
       // 在所有部门中，部门编码都不能重复
       const isSame = this.originList.some(item => item.code === value)
       if (isSame) {
@@ -149,7 +163,8 @@ export default {
       // 当前操作的数据
       currentdata: {},
       // 部门负责人列表数据
-      managerList: []
+      managerList: [],
+      loading: false
     }
   },
   created() {
@@ -157,9 +172,15 @@ export default {
   },
   methods: {
     async getDepartmentList() {
-      const res = await getDepartmentList()
-      this.list = this.recurTransTree(res.data.depts, '')
-      this.originList = res.data.depts
+      this.loading = true
+      try {
+        const res = await getDepartmentList()
+        this.list = this.recurTransTree(res.data.depts, '')
+        this.originList = res.data.depts
+        this.loading = false
+      } catch (error) {
+        this.loading = false
+      }
     },
     handleHideDialog(value) {
       this.myDialogVisible = value
@@ -215,12 +236,10 @@ export default {
       return child
     },
     async showDialog(data, type) {
-      console.log(type)
       this.dialogVisible = true
       this.currentdata = data
       if (type === 'edit') {
         const res = await getDepartDetail(this.currentdata.id)
-        console.log(res)
         this.departForm = res.data
       }
     },

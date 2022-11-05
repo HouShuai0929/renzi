@@ -14,7 +14,7 @@
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item @click.native="showDialog('add')">添加子部门</el-dropdown-item>
               <el-dropdown-item v-if="isShowBtn" @click.native="showDialog('edit')">编辑部门</el-dropdown-item>
-              <el-dropdown-item v-if="isShowBtn">删除部门</el-dropdown-item>
+              <el-dropdown-item v-if="isShowBtn" @click.native="delDepartment">删除部门</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </el-col>
@@ -22,13 +22,14 @@
     </el-col>
   </el-row>
 </template>
-
 <script>
+import { delDepartment } from '@/api/department'
 export default {
   props: {
     data: {
       type: Object,
-      required: true
+      required: true,
+      id: ''
     },
     isShowBtn: {
       type: Boolean,
@@ -39,6 +40,18 @@ export default {
     async showDialog(type) {
       // console.log('点击了添加子部门');
       this.$emit('show-dialog', this.data, type)
+    },
+    // 删除部门
+    delDepartment() {
+      this.$confirm('此操作将永久删除该部门, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(async() => {
+        await delDepartment(this.data.id)
+        this.$message.success('删除成功')
+        this.$emit('fetch-department')
+      })
     }
   }
 }
