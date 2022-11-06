@@ -19,6 +19,8 @@ Vue.use(ElementUI)
 
 Vue.config.productionTip = false
 
+import componentPlugin from './components/index.js'
+Vue.use(componentPlugin)
 // vue实例化
 new Vue({
   el: '#app',
