@@ -1,15 +1,27 @@
 import request from '@/utils/request'
 
-/**
- * 获取员工列表
- * @param {*} params.page 当前页
- * @param {*} params.size 每页多少条
- * @returns promise
- */
+// 查询
 export function getEmployeeList(params) {
   return request({
     url: '/sys/user',
     method: 'get',
     params
+  })
+}
+
+// 添加
+export function addEmployee(data) {
+  return request({
+    url: '/sys/user',
+    method: 'post',
+    data
+  })
+}
+
+// 删除
+export function delEmployee(id) {
+  return request({
+    url: `/sys/user/${id}`,
+    method: 'delete'
   })
 }

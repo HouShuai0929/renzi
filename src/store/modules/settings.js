@@ -1,7 +1,7 @@
 // 页面设置
 import defaultSettings from '@/settings'
 
-const { showSettings, fixedHeader, sidebarLogo } = defaultSettings
+const { fixedHeader, sidebarLogo } = defaultSettings
 
 const state = {
   // showSettings: showSettings,
