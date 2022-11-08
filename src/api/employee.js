@@ -25,3 +25,12 @@ export function delEmployee(id) {
     method: 'delete'
   })
 }
+
+// 批量导入
+export function batchEmployee(data) {
+  return request({
+    url: '/sys/user/batch',
+    method: 'post',
+    data
+  })
+}

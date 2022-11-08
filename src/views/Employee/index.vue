@@ -8,7 +8,7 @@
         </template>
         <template #right>
           <el-button type="primary" size="small" @click="$router.push('/import')">导入excel</el-button>
-          <el-button type="primary" size="small">导出excel</el-button>
+          <el-button type="primary" size="small" @click="exportExcel">导出excel</el-button>
           <el-button type="primary" size="small" @click="showDialog">新增员工</el-button>
         </template>
       </page-tools>
@@ -100,6 +100,56 @@ export default {
     },
     closeDialog() {
       this.dialogVisible = false
+    },
+    // 员工数据的批量导出
+    exportExcel() {
+      // 表头
+      const headerArr = ['姓名', '手机号', '入职日期', '工号', '聘用形式', '部门']
+      // 中英对照关系
+      const headerRelation = {
+        '姓名': 'username',
+        '手机号': 'mobile',
+        '入职日期': 'timeOfEntry',
+        '工号': 'workNumber',
+        '聘用形式': 'formOfEmployment',
+        '部门': 'departmentName'
+      }
+      const twoArr = this.transData(this.list, headerArr, headerRelation)
+      // 动态引入 @/vendor/Export2Excel 包
+      import('@/vendor/Export2Excel').then(excel => {
+        // excel：是 @/vendor/Export2Excel 包中的 excel 导出模块
+        // export_json_to_excel：将 json 数据转换为 excel
+        excel.export_json_to_excel({
+          // 表头 header 必填，是一个数组
+          // header: ['姓名', '年龄'],
+          header: headerArr,
+          // 表格 body 具体数据，是一个二维数组
+          data: twoArr,
+          filename: 'excel-list', // 文件名称
+          autoWidth: true, // 宽度是否自适应
+          bookType: 'xlsx' // 生成的文件类型
+        })
+      })
+    },
+    // 封装将后端返回的表格数组数据转换为二维数组的方法
+    transData(list, headerArr, relation) {
+      // list：后端返回的表格数组数据
+      // headerArr：表头数据
+      const twoArr = []
+      list.forEach(item => {
+        const arr = []
+        // 遍历表头数据
+        headerArr.forEach(key => {
+          // key：中文key，如：'姓名'
+          // enkey：引文key，如 'username'
+          const enkey = relation[key]
+          // item[enkey] 周星星
+          arr.push(item[enkey])
+        })
+        twoArr.push(arr)
+      })
+      // 返回值：转换后的二维数组
+      return twoArr
     },
     delEmployee(id) {
       // 1. 询问用户
