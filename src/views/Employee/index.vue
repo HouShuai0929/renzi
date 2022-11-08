@@ -7,7 +7,7 @@
           <span>本月: 社保在缴 公积金在缴</span>
         </template>
         <template #right>
-          <el-button type="primary" size="small">导入excel</el-button>
+          <el-button type="primary" size="small" @click="$router.push('/import')">导入excel</el-button>
           <el-button type="primary" size="small">导出excel</el-button>
           <el-button type="primary" size="small" @click="showDialog">新增员工</el-button>
         </template>

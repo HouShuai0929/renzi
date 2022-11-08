@@ -30,6 +30,18 @@ export const constantRoutes = [
       component: () => import('@/views/Dashboard/index'),
       meta: { title: '首页', icon: 'dashboard' }
     }]
+  },
+  // excel 导入页面
+  {
+    path: '/import',
+    component: Layout,
+    hidden: true,
+    children: [{
+      path: '',
+      name: 'ImportExcel',
+      component: () => import('@/views/ImportExcel/index'),
+      meta: { title: 'excel导入' }
+    }]
   }
 ]
 
