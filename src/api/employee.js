@@ -34,3 +34,11 @@ export function batchEmployee(data) {
     data
   })
 }
+// 上传用户信息
+export function updateEmployee(data) {
+  return request({
+    url: `/sys/user/${data.id}`,
+    method: 'put',
+    data
+  })
+}

@@ -42,6 +42,21 @@ export const constantRoutes = [
       component: () => import('@/views/ImportExcel/index'),
       meta: { title: 'excel导入' }
     }]
+  },
+  // 员工详情页
+  {
+    path: '/employeeDetail',
+    component: Layout,
+    hidden: true,
+    children: [{
+      path: '',
+      name: 'employeedetail',
+      component: () => import('@/views/Employee/detail'),
+      meta: {
+        title: '员工详情',
+        activeMenu: '/employee'
+      }
+    }]
   }
 ]
 

@@ -33,7 +33,7 @@
 
           <el-table-column label="操作" fixed="right" width="200">
             <template #default="{ row }">
-              <el-button type="text" size="small">查看</el-button>
+              <el-button type="text" size="small" @click="toDetail(row.id)">查看</el-button>
               <el-button type="text" size="small">分配角色</el-button>
               <el-button type="text" size="small" @click="delEmployee(row.id)">删除</el-button>
             </template>
@@ -143,13 +143,23 @@ export default {
           // key：中文key，如：'姓名'
           // enkey：引文key，如 'username'
           const enkey = relation[key]
-          // item[enkey] 周星星
-          arr.push(item[enkey])
+          if (enkey === 'formOfEmployment') {
+            arr.push(this.hireEnum[item[enkey]])
+          } else {
+            arr.push(item[enkey])
+          }
         })
         twoArr.push(arr)
       })
       // 返回值：转换后的二维数组
       return twoArr
+    },
+    // 跳转员工详情页
+    toDetail(id) {
+      this.$router.push({
+        path: '/employeeDetail',
+        query: { id }
+      })
     },
     delEmployee(id) {
       // 1. 询问用户

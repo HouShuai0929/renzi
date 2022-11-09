@@ -34,7 +34,7 @@ request.interceptors.response.use(
   },
   error => {
     if (error.response.status === 401) {
-      store.commit('user/logout')
+      store.commit('user/removeUserInfo')
       router.push('/login')
       Message.error('登陆过期,请重新登录')
     } else {
