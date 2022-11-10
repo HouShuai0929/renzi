@@ -32,3 +32,16 @@ export function deleteRole(id) {
     method: 'delete'
   })
 }
+/**
+ * 给角色分配权限
+ * @param {*} data.id 角色id
+ * @param {*} data.permIds 分配的权限id组成的数组
+ * @returns promise
+ */
+export function assignPermission(data) {
+  return request({
+    url: '/sys/role/assignPrem',
+    method: 'put',
+    data
+  })
+}

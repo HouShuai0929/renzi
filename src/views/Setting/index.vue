@@ -13,7 +13,7 @@
 
         <el-table-column prop="address" label="操作" align="center">
           <template #default="{ row }">
-            <el-button type="success" size="small">分配权限</el-button>
+            <el-button type="success" size="small" @click="showAssignDialog(row.id)">分配权限</el-button>
             <el-button type="primary" size="small" @click="showDialog(row.id)">编辑</el-button>
             <el-button type="danger" size="small" @click="deleteRole(row.id)">删除</el-button>
           </template>
@@ -49,11 +49,21 @@
         <el-button type="primary" @click="submit">确 定</el-button>
       </span>
     </el-dialog>
+    <AssignDialog
+      :assign-dialog-visible="assignDialogVisible"
+      :role-id="roleId"
+      @close-dialog="closeAssignDialog"
+    />
+
   </div>
 </template>
 <script>
 import { getRoleList, addRole, getRoleDetail, updateRole, deleteRole } from '@/api/setting'
+import AssignDialog from './components/assign-dialog.vue'
 export default {
+  components: {
+    AssignDialog
+  },
   data() {
     return {
       roleList: [],
@@ -75,7 +85,10 @@ export default {
         description: [
           { required: true, message: '请输入角色描述', trigger: 'blur' }
         ]
-      }
+      },
+      // 控制分配权限弹窗的显示与隐藏
+      assignDialogVisible: false,
+      roleId: ''
     }
   },
   created() {
@@ -145,6 +158,15 @@ export default {
         // 刷新列表
         this.getRoleList()
       })
+    },
+    // 显示分配权限的弹窗
+    showAssignDialog(id) {
+      this.roleId = id
+      this.assignDialogVisible = true
+    },
+    // 关闭弹窗
+    closeAssignDialog() {
+      this.assignDialogVisible = false
     }
   }
 }

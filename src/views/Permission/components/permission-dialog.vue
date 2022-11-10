@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="添加权限点" :visible="dialogVisible" width="50%" @close="closeDialog">
+  <el-dialog :title="permissionForm.id ? '编辑权限点' : '添加权限点'" :visible="dialogVisible" width="50%" @close="closeDialog">
 
     <el-form ref="permissionRef" :model="permissionForm" :rules="permissionRules" label-width="80px">
 
@@ -29,17 +29,26 @@
 
     <span slot="footer" class="dialog-footer">
       <el-button @click="$emit('close-dialog')">取 消</el-button>
-      <el-button type="primary" @click="$emit('close-dialog')">确 定</el-button>
+      <el-button type="primary" @click="submit">确 定</el-button>
     </span>
 
   </el-dialog>
 </template>
 
 <script>
+import { addPermission, getPermissionDetail, updatePermission } from '@/api/permission'
 export default {
   props: {
     dialogVisible: {
       type: Boolean,
+      required: true
+    },
+    type: {
+      type: Number,
+      required: true
+    },
+    pid: {
+      type: String,
       required: true
     }
   },
@@ -73,6 +82,31 @@ export default {
         description: '', // 权限描述
         enVisible: '0' // 权限启用标识
       }
+    },
+    submit() {
+      this.$refs.permissionRef.validate(
+        async valid => {
+          if (!valid) return
+          if (this.permissionForm.id) {
+            await updatePermission(this.permissionForm)
+          } else {
+            await addPermission({
+              ...this.permissionForm,
+              type: this.type,
+              pid: this.pid
+            })
+          }
+
+          const msg = this.permissionForm.id ? '编辑成功' : '添加成功'
+          this.$message.success(msg)
+          this.$emit('close-dialog')
+          this.$emit('fetch-permission-list')
+        }
+      )
+    },
+    async fetchPermissionDetail(id) {
+      const res = await getPermissionDetail(id)
+      this.permissionForm = res.data
     }
   }
 }
