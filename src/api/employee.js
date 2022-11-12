@@ -42,3 +42,16 @@ export function updateEmployee(data) {
     data
   })
 }
+/**
+ * 给员工分配角色
+ * @param {*} data.id 员工id
+ * @param {*} data.roleIds 选中的角色id组成的数组
+ * @returns promise
+ */
+export function assignRole(data) {
+  return request({
+    url: '/sys/user/assignRoles',
+    method: 'put',
+    data
+  })
+}

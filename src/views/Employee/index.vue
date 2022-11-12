@@ -34,7 +34,7 @@
           <el-table-column label="操作" fixed="right" width="200">
             <template #default="{ row }">
               <el-button type="text" size="small" @click="toDetail(row.id)">查看</el-button>
-              <el-button type="text" size="small">分配角色</el-button>
+              <el-button type="text" size="small" @click="showAssignDialog(row.id)">分配角色</el-button>
               <el-button type="text" size="small" @click="delEmployee(row.id)">删除</el-button>
             </template>
           </el-table-column>
@@ -51,13 +51,24 @@
       </el-card>
     </div>
     <AddDialog :dialog-visible="dialogVisible" @close-dialog="closeDialog" @get-employee-list="getEmployeeList" />
+    <el-dialog title="分配角色" :visible="assignDialogVisible" width="50%" @close="assignCloseDialog" @open="assignOpenDialog">
+      <el-checkbox-group v-model="roleIds">
+        <el-checkbox v-for="item in roleList" :key="item.id" :label="item.id">{{ item.name }}</el-checkbox>
+      </el-checkbox-group>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="assignDialogVisible = false">取消</el-button>
+        <el-button type="primary" @click="submit">确定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-import { getEmployeeList, delEmployee } from '@/api/employee'
+import { getEmployeeList, delEmployee, assignRole } from '@/api/employee'
 import dayjs from 'dayjs'
 import AddDialog from './components/add-dialog.vue'
+import { getRoleList } from '@/api/setting'
+import { getUserDetailInfo } from '@/api/user'
 export default {
   components: {
     AddDialog
@@ -76,7 +87,11 @@ export default {
         2: '非正式'
       },
       total: 0,
-      dialogVisible: false
+      dialogVisible: false,
+      assignDialogVisible: false,
+      roleList: [],
+      roleIds: [],
+      employeeId: ''
     }
   },
   created() {
@@ -160,6 +175,33 @@ export default {
         path: '/employeeDetail',
         query: { id }
       })
+    },
+    showAssignDialog(id) {
+      this.employeeId = id
+      this.assignDialogVisible = true
+    },
+    assignCloseDialog() {
+      this.assignDialogVisible = false
+      this.roleIds = []
+    },
+    async assignOpenDialog() {
+      const res = await getRoleList({
+        page: 1,
+        pagesize: 100
+      })
+      this.roleList = res.data.rows
+      const employeeDetail = await getUserDetailInfo(this.employeeId)
+      this.roleIds = employeeDetail.data.roleIds
+    },
+    async submit() {
+      await assignRole({
+        id: this.employeeId,
+        roleIds: this.roleIds
+      })
+      // 提示用户
+      this.$message.success('分配角色成功')
+      // 关闭弹窗
+      this.assignDialogVisible = false
     },
     delEmployee(id) {
       // 1. 询问用户

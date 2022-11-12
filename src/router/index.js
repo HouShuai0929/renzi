@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import { asyncRoutes } from './asyncRoutes'
+// import { asyncRoutes } from './asyncRoutes'
 Vue.use(Router)
 
 /* Layout */
@@ -64,7 +64,7 @@ const createRouter = () => new Router({
   // mode: 'history', // require service support
   mode: 'history',
   scrollBehavior: () => ({ y: 0 }),
-  routes: [...constantRoutes, ...asyncRoutes]
+  routes: [...constantRoutes]
 })
 
 const router = createRouter()

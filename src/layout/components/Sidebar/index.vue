@@ -41,7 +41,8 @@ export default {
     ]),
     routes() {
       // this.$router.options.routes 可以拿到完整的路由表数据
-      return this.$router.options.routes
+      // return this.$router.options.routes
+      return this.$store.state.menu.menuList
     },
     activeMenu() {
       const route = this.$route

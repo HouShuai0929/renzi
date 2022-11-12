@@ -14,7 +14,7 @@ import router from './router'
 import '@/icons' // icon
 
 import './permission'
-
+import '@/directive'
 Vue.use(ElementUI)
 
 Vue.config.productionTip = false
