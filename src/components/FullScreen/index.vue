@@ -4,13 +4,36 @@
     <svg-icon
       icon-class="fullscreen"
       class="fullscreen"
+      @click="toggleScreen"
     />
   </div>
 </template>
 
 <script>
 export default {
-  name: 'ScreenFull'
+  name: 'ScreenFull',
+  data() {
+    return {
+      // 表示当前浏览器的全屏状态
+      // isFull 为 true 表示当前是全屏状态
+      // isFull 为 false 表示当前不是全屏状态
+      isFull: false
+    }
+  },
+  methods: {
+    toggleScreen() {
+      if (this.isFull) {
+        // 表示当前是全屏状态
+        // 退出全屏
+        document.exitFullscreen()
+      } else {
+        // 表示当前不是全屏状态
+        // 开启全屏
+        document.documentElement.requestFullscreen()
+      }
+      this.isFull = !this.isFull
+    }
+  }
 }
 </script>
 
