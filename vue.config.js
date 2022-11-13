@@ -12,6 +12,30 @@ const name = defaultSettings.title || 'vue Admin Template' // page title
 // 设置本地服务端口
 const port = process.env.port || process.env.npm_config_port || 8081 // dev port
 
+// 打包优化
+// 1. 准备排除项和对应的 cdn
+let externals = {}
+let cdn = { css: [], js: [] }
+if (process.env.NODE_ENV === 'production') {
+  externals = {
+    // 包名: 引入的 js 脚本文件中的名称
+    vue: 'Vue',
+    'element-ui': 'ELEMENT',
+    xlsx: 'XLSX'
+  }
+  cdn = {
+    css: [
+      'https://unpkg.com/element-ui/lib/theme-chalk/index.css' // element-ui css 样式表
+    ],
+    js: [
+      // vue must at first!
+      'https://unpkg.com/vue@2.6.12/dist/vue.js',
+      'https://unpkg.com/element-ui@2.15.3/lib/index.js',
+      'https://cdn.jsdelivr.net/npm/xlsx@0.16.6/dist/xlsx.full.min.js'
+    ]
+  }
+}
+
 module.exports = {
   publicPath: './',
   // 输出文件目录
@@ -46,9 +70,17 @@ module.exports = {
       alias: {
         '@': resolve('src')
       }
-    }
+    },
+    // 2. webpack 配置 externals 配置项，排除打包
+    externals: externals
   },
   chainWebpack(config) {
+    // 3. 配置 cdn
+    // 通过 html-webpack-plugin，将 cdn 脚本文件，注入到 index.html 之中
+    config.plugin('html').tap(args => {
+      args[0].cdn = cdn
+      return args
+    })
     // it can improve the speed of the first screen, it is recommended to turn on preload
     config.plugin('preload').tap(() => [
       {
